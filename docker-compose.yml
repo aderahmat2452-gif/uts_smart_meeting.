@@ -1,0 +1,43 @@
+services:
+  db:
+    image: mariadb:10.11
+    container_name: db_uts_app
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - db_data_uts:/var/lib/mysql
+
+  web:
+    image: php:8.2-apache
+    container_name: web_uts_app
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "${WEB_PORT}:80"
+    volumes:
+      - ./www:/var/www/html
+    command: >
+      sh -c "docker-php-ext-install mysqli && apache2-foreground"
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: pma_uts_app
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8085:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+
+volumes:
+  db_data_uts:
