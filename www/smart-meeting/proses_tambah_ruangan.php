@@ -1,5 +1,5 @@
 <?php
-// proses_tambah_ruangan.php
+ 
 $koneksi = mysqli_connect("db", "root", "password", "db_smart_meeting");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_ruangan = $_POST['nama_ruangan'];
