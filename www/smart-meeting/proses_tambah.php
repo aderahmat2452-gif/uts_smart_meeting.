@@ -1,13 +1,12 @@
 <?php
-// proses_tambah.php
-// Host wajib 'db', password 'password', dan database 'db_office_smart'
+ 
 $koneksi = mysqli_connect('db', 'root', 'password', 'db_office_smart');
 if (!$koneksi) {
     die("Koneksi database gagal: " . mysqli_connect_error());
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Menangkap data dari form modal index.php
+    
     $tanggal_rapat = $_POST['tanggal_rapat'];
     $jam_mulai     = $_POST['jam_mulai'];
     $jam_selesai   = $_POST['jam_selesai'];
@@ -16,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $agenda        = $_POST['agenda'];
     $status_default = "Pinjam"; // Status default sesuai ketentuan soal
 
-    // 1. Validasi waktu: Jam mulai tidak boleh lebih besar dari jam selesai
+     
     if ($jam_mulai >= $jam_selesai) {
         echo "<script>
                 alert('Maaf, jam mulai rapat tidak boleh melewati atau sama dengan jam selesai!');
@@ -25,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // 2. Validasi Bentrok Waktu (Menggunakan 'k.devisi' sesuai database asli kamu)
+    
     $query_cek = "SELECT b.*, k.devisi FROM t_booking b
                   JOIN m_karyawan k ON b.id_karyawan = k.id_karyawan
                   WHERE b.id_ruang = '$id_ruangan' 
@@ -40,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (mysqli_num_rows($res_cek) > 0) {
         $data_bentrok = mysqli_fetch_assoc($res_cek);
-        // Pesan error sesuai lembar soal menggunakan field 'devisi'
+       
         echo "<script>
                 alert('Maaf, ruangan sudah digunakan oleh Divisi [" . $data_bentrok['devisi'] . "] untuk agenda [" . $data_bentrok['Agenda'] . "]!');
                 window.location.href = 'index.php';
@@ -48,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // 3. Jika aman dan tidak bentrok, langsung simpan ke tabel t_booking
+    
     $query_insert = "INSERT INTO t_booking (id_karyawan, id_ruang, tanggal_ratat, jam_mulai, jam_selesai, Agenda, Status) 
                      VALUES ('$id_karyawan', '$id_ruangan', '$tanggal_rapat', '$jam_mulai', '$jam_selesai', '$agenda', '$status_default')";
 
