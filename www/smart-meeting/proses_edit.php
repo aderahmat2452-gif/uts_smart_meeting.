@@ -1,5 +1,5 @@
 <?php
-// proses_edit.php
+ 
 $koneksi = mysqli_connect("db_uts_app", "root", "password", "db_smart_meeting");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -11,13 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_karyawan   = $_POST['id_karyawan'];
     $agenda        = $_POST['agenda'];
 
-    // 1. Validasi Jam Terbalik
+    
     if ($jam_mulai >= $jam_selesai) {
         echo "<script>alert('Error: Jam mulai tidak boleh lebih besar atau sama dengan jam selesai!'); window.history.back();</script>";
         exit;
     }
 
-    // 2. Validasi Bentrok Ruangan (Kecuali ID yang sedang diedit sendiri)
+    
     $query_cek = "SELECT p.*, k.devisi 
                   FROM peminjaman p
                   JOIN karyawan k ON p.id_karyawan = k.id_karyawan
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // 3. Eksekusi Update Data (Nama kolom disesuaikan: 'tanggal')
+     
     $query_update = "UPDATE peminjaman SET 
                         tanggal = '$tanggal_rapat', 
                         jam_mulai = '$jam_mulai', 
