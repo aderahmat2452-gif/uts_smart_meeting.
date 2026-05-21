@@ -1,12 +1,11 @@
  <?php
-// index.php
-// Menggunakan database db_office_smart sesuai instruksi .env baru
+ 
 $koneksi = mysqli_connect('db', 'root', 'password', 'db_office_smart');
 if (!$koneksi) {
     die("Koneksi database gagal: " . mysqli_connect_error());
 }
 
-// Hitung Statistik sesuai struktur tabel m_ruangan
+ 
 $q_total_ruangan = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM m_ruangan");
 $r_total_ruangan = mysqli_fetch_assoc($q_total_ruangan)['total'];
 
@@ -16,7 +15,7 @@ $r_ruangan_digunakan = mysqli_fetch_assoc($q_ruangan_digunakan)['total'];
 
 $r_ruangan_tersedia = $r_total_ruangan - $r_ruangan_digunakan;
 
-// Hitung statistik untuk m_karyawan dan devisi
+ 
 $q_total_karyawan = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM m_karyawan");
 $r_total_karyawan = mysqli_fetch_assoc($q_total_karyawan)['total'];
 
@@ -74,7 +73,7 @@ $r_total_divisi = mysqli_fetch_assoc($q_total_divisi)['total'];
             transition: 0.5s;
         }
 
-        /* Lingkaran Background Efek Hover (Sesuai foto rujukan) */
+        
         .animated-card::before {
             content: '';
             position: absolute;
@@ -89,7 +88,7 @@ $r_total_divisi = mysqli_fetch_assoc($q_total_divisi)['total'];
             z-index: 1;
         }
 
-        /* Saat Card di-hover, lingkaran membesar memenuhi seluruh background card */
+        
         .animated-card:hover::before {
             width: 100%;
             height: 100%;
@@ -98,7 +97,7 @@ $r_total_divisi = mysqli_fetch_assoc($q_total_divisi)['total'];
             border-radius: 20px;
         }
 
-        /* Pembungkus Konten Utama agar teks tetap berada di atas area efek */
+       
         .card-body-content {
             position: relative;
             z-index: 3;
@@ -106,7 +105,7 @@ $r_total_divisi = mysqli_fetch_assoc($q_total_divisi)['total'];
         }
 
         .animated-card:hover .card-body-content {
-            color: #fff; /* Teks otomatis putih saat background berubah gelap/berwarna */
+            color: #fff;  
         }
 
         .animated-card:hover .text-primary,
@@ -114,7 +113,7 @@ $r_total_divisi = mysqli_fetch_assoc($q_total_divisi)['total'];
             color: #fff !important;
         }
 
-        /* Efek Animasi Icon Menggantikan Efek Produk Botol Coca-Cola */
+        
         .card-room-icon {
             position: absolute;
             bottom: -15px;
@@ -125,14 +124,14 @@ $r_total_divisi = mysqli_fetch_assoc($q_total_divisi)['total'];
             transition: 0.5s ease-in-out;
         }
 
-        /* Ketika di-hover, icon membesar, berputar sedikit, dan berubah warna kontras */
+       
         .animated-card:hover .card-room-icon {
             color: rgba(255, 255, 255, 0.25);
             transform: scale(1.3) rotate(-15deg) translate(-10px, -10px);
         }
 
 
-        /* ==================== STYLE UNTUK 9 DOT NAVIGATION ==================== */
+        
         .dot-navigation-container {
             position: fixed;
             bottom: 30px;
