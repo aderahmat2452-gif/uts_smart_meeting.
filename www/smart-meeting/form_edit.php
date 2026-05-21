@@ -1,16 +1,16 @@
 <?php
-// form_edit.php
-// 1. AKTIFKAN ERROR REPORTING AGAR TIDAK MUNCUL HALAMAN KOSONG PUTIH
+
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// 2. KONEKSI KE DATABASE BARU
+
 $koneksi = mysqli_connect('db', 'root', 'password', 'db_office_smart');
 if (!$koneksi) {
     die("Koneksi database gagal: " . mysqli_connect_error());
 }
 
-// Menangkap ID booking yang dikirim lewat URL tombol EDT
+
 if (!isset($_GET['id'])) {
     header("Location: index.php");
     exit();
@@ -18,14 +18,14 @@ if (!isset($_GET['id'])) {
 
 $id_booking = $_GET['id'];
 
-// 3. QUERY DATA LAMA (Menggunakan m_karyawan, m_ruangan, dan t_booking sesuai soal)
+
 $query_data = "SELECT b.*, k.nama_karyawan, k.devisi, r.nama_ruangan 
                FROM t_booking b
                JOIN m_karyawan k ON b.id_karyawan = k.id_karyawan
                JOIN r.id_ruangan = b.id_ruang -- Menyesuaikan nama kolom foreign key t_booking
                WHERE b.id_booking = '$id_booking'";
 
-// Jika join di atas terlalu sensitif dengan database kamu, gunakan query aman ini:
+ 
 $query_data = "SELECT * FROM t_booking WHERE id_booking = '$id_booking'";
 $res_data = mysqli_query($koneksi, $query_data);
 
@@ -36,14 +36,14 @@ if (mysqli_num_rows($res_data) === 0) {
 
 $data_edit = mysqli_fetch_assoc($res_data);
 
-// 4. PROSES UPDATE KETIKA TOMBOL SIMPAN DIKLIK
+ 
 if (isset($_POST['proses_update_booking'])) {
     $tanggal_rapat = $_POST['tanggal_rapat'];
     $jam_mulai     = $_POST['jam_mulai'];
     $jam_selesai   = $_POST['jam_selesai'];
     $agenda        = $_POST['agenda'];
 
-    // Update data ke tabel t_booking sesuai kolom barumu (tanggal_ratat dan Agenda)
+    
     $query_update = "UPDATE t_booking SET 
                         tanggal_ratat = '$tanggal_rapat', 
                         jam_mulai = '$jam_mulai', 
